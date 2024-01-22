@@ -1,0 +1,85 @@
+package com.meusprojetos.controle_financas.dto;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
+
+import com.meusprojetos.controle_financas.entities.User;
+
+public class UserDto {
+	
+	private String name;
+	private String email;
+	private String senha;
+	
+	private List<String> roles = new ArrayList<>();
+	
+	public UserDto(User entity) {
+		name = entity.getName();
+		email = entity.getEmail();
+		for (GrantedAuthority obj :entity.getRoles()) {
+			roles.add(obj.getAuthority());
+		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, name, roles, senha);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDto other = (UserDto) obj;
+		return Objects.equals(email, other.email) && Objects.equals(name, other.name)
+				&& Objects.equals(roles, other.roles) && Objects.equals(senha, other.senha);
+	}
+
+	@Override
+	public String toString() {
+		return "UserDto [name=" + name + ", email=" + email + ", senha=" + senha + ", roles=" + roles + "]";
+	}
+	
+	
+
+}

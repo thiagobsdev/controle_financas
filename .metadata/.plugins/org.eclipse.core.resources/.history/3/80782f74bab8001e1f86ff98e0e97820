@@ -1,0 +1,37 @@
+package com.meusprojetos.controle_financas.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.meusprojetos.controle_financas.dto.LancamentoDTO;
+import com.meusprojetos.controle_financas.repositories.LancamentoRepository;
+
+import jakarta.validation.Valid;
+
+@Service
+public class LancamentoService  {
+
+	@Autowired
+	private LancamentoRepository repository;
+
+	public Page<LancamentoDTO> findAll(String name, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public LancamentoDTO findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public @Valid LancamentoDTO update(Long id, @Valid LancamentoDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+	
+
+}

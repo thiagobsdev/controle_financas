@@ -1,0 +1,14 @@
+INSERT INTO tb_role (authority) VALUES ('ROLE_CLIENT');
+INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
+
+INSERT INTO tb_user (name, email, password) VALUES ('Thiago Barbosa', 'thiago@gmail.com', '$2a$10$vBPuHuYDyQOPTYQOl4y/HusTmJnA4BNJi6STjlpRpJQEU/7lmnkC2');
+INSERT INTO tb_user (name, email, password) VALUES ('Teste de inserção de usuário', 'teste@gmail.com', '$2a$10$vBPuHuYDyQOPTYQOl4y/HusTmJnA4BNJi6STjlpRpJQEU/7lmnkC2');
+
+INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 2);
+
+
+
+
+
+INSERT INTO tb_lancamento (descricao, ano, mes, valor ,user_id, status, tipo ) VALUES ('lorem ipsum',2024, 2, 90.9, 1,'PENDENTE', 'RECEITA' );

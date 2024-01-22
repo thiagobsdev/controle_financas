@@ -1,0 +1,13 @@
+package com.meusprojetos.controle_financas.dto;
+
+public class UserInsertDTO extends UserDTO {
+	
+	private String password;
+	
+	public UserInsertDTO() {
+		super();
+	}
+	
+	
+
+}

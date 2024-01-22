@@ -1,0 +1,5 @@
+package com.meusprojetos.controle_financas.entities.enums;
+
+public enum TipoLancamento {
+
+}

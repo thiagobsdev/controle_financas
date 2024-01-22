@@ -1,0 +1,140 @@
+package com.meusprojetos.controle_financas.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.LancamentoDetails;
+import org.springframework.security.core.userdetails.LancamentoDetailsService;
+import org.springframework.security.core.userdetails.LancamentonameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.meusprojetos.controle_financas.dto.LancamentoDTO;
+import com.meusprojetos.controle_financas.entities.Lancamento;
+import com.meusprojetos.controle_financas.entities.Role;
+import com.meusprojetos.controle_financas.projections.LancamentoDetailsProjection;
+import com.meusprojetos.controle_financas.repositories.LancamentoRepository;
+import com.meusprojetos.controle_financas.repositories.RoleRepository;
+import com.meusprojetos.controle_financas.services.exceptions.DataBaseExceptions;
+import com.meusprojetos.controle_financas.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+
+@Service
+public class LancamentoService implements LancamentoDetailsService {
+
+	@Autowired
+	private LancamentoRepository repository;
+	@Autowired
+	private RoleRepository roleRepository;
+
+	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+	@Override
+	public LancamentoDetails loadLancamentoByLancamentoname(String username) throws LancamentonameNotFoundException {
+
+		List<LancamentoDetailsProjection> result = repository.searchLancamentoAndRolesByEmail(username);
+		if (result.size() == 0) {
+			throw new LancamentonameNotFoundException("Email not found");
+		}
+
+		Lancamento user = new Lancamento();
+		user.setEmail(result.get(0).getLancamentoname());
+		user.setPassword(result.get(0).getPassword());
+		for (LancamentoDetailsProjection projection : result) {
+			user.addRole(new Role(projection.getRoleId(), projection.getAuthority()));
+		}
+
+		return user;
+	}
+
+	protected Lancamento findLancamentoAutent() {
+
+		try {
+
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+			String username = jwtPrincipal.getClaimAsString("username");
+
+			return repository.findByEmail(username).get();
+
+		} catch (Exception e) {
+			throw new LancamentonameNotFoundException("Email not found");
+		}
+
+	}
+
+	@Transactional(readOnly = true)
+	public LancamentoDTO getMe() {
+		Lancamento user = findLancamentoAutent();
+		return new LancamentoDTO(user);
+	}
+
+	@Transactional
+	public @Valid LancamentoDTO insert(LancamentoDTO dto) {
+		
+
+	}
+
+	@Transactional(readOnly = true)
+	public LancamentoDTO findById(Long id) {
+		Lancamento user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+
+		LancamentoDTO dto = new LancamentoDTO(user);
+		return dto;
+
+	}
+
+	@Transactional
+	public Page<LancamentoDTO> findAll(String name, Pageable pageable) {
+		Page<Lancamento> result = repository.searchByName(name, pageable);
+		return result.map(x -> new LancamentoDTO(x));
+
+	}
+
+	@Transactional
+	public LancamentoDTO update(Long id, LancamentoDTO dto) {
+
+		try {
+
+			Lancamento user = repository.getReferenceById(id);
+
+			copyDtoTOEntity(dto, user);
+
+			return new LancamentoDTO(repository.save(user));
+
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id não encontrado ao atualizar");
+		}
+
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public void delete(Long id) {
+
+		if (!repository.existsById(id)) {
+			throw new ResourceNotFoundException("Recurso não encontrado");
+		}
+
+		try {
+			repository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataBaseExceptions("Falha de integridade referencial");
+		}
+	}
+
+	private void copyDtoTOEntity(LancamentoDTO dto, Lancamento user) {
+
+
+	}
+
+}

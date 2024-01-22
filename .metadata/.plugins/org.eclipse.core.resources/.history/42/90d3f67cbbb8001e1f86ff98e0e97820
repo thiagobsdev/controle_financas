@@ -1,0 +1,22 @@
+package com.meusprojetos.controle_financas.repositories;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.meusprojetos.controle_financas.entities.Lancamento;
+import com.meusprojetos.controle_financas.entities.User;
+
+@Repository
+public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
+	
+	@Query(nativeQuery = true, value = """ 
+			SELECT * 
+			FROM TB_USER
+			WHERE UPPER(TB_USER.name) LIKE UPPER(CONCAT('%', :name, '%'))
+			""" )
+	Page<Lancamento> searchByName( String name, Pageable page);
+
+}

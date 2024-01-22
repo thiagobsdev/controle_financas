@@ -1,0 +1,28 @@
+package com.meusprojetos.controle_financas.dto;
+
+import java.util.List;
+
+public class UserInsertDTO extends UserDTO {
+	
+	private String password;
+	
+	public UserInsertDTO() {
+		super();
+	}
+
+	public UserInsertDTO(Long id, String name, String email, String password, List<String> roles, String password2) {
+		super(id, name, email, password, roles);
+		password = password2;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
+}

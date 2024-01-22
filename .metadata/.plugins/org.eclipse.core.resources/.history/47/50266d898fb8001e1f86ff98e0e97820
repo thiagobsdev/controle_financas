@@ -1,0 +1,15 @@
+package com.meusprojetos.controle_financas.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.meusprojetos.controle_financas.entities.Role;
+
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long> {
+
+	
+	
+	
+
+}

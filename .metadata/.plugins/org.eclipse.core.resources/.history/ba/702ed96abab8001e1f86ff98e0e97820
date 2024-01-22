@@ -1,0 +1,17 @@
+package com.meusprojetos.controle_financas.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.meusprojetos.controle_financas.repositories.LancamentoRepository;
+
+@Service
+public class LancamentoService  {
+
+	@Autowired
+	private LancamentoRepository repository;
+	
+
+	
+
+}

@@ -1,0 +1,24 @@
+package com.meusprojetos.controle_financas.dto;
+
+import java.math.BigDecimal;
+
+import com.meusprojetos.controle_financas.entities.User;
+import com.meusprojetos.controle_financas.entities.enums.StatusLancamento;
+import com.meusprojetos.controle_financas.entities.enums.TipoLancamento;
+
+public class LancamentoDTO {
+
+	private Long id;
+
+	private String descricao;
+	private Integer ano;
+	private Integer mes;
+	private BigDecimal valor;
+
+	private User user;
+
+	private TipoLancamento tipoLancamento;
+
+	private StatusLancamento statusLancamento;
+
+}

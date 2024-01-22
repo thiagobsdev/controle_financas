@@ -1,0 +1,5 @@
+package com.meusprojetos.controle_financas.entities;
+
+public class User {
+
+}

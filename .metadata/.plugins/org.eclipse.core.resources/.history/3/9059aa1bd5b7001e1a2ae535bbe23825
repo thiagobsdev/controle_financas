@@ -1,0 +1,8 @@
+package com.meusprojetos.controle_financas.entities.enums;
+
+public enum StatusLancamento {
+	
+		RECEITA,
+		DESPESA
+
+}

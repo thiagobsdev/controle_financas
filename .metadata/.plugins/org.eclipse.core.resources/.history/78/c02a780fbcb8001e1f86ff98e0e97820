@@ -1,0 +1,56 @@
+package com.meusprojetos.controle_financas.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.meusprojetos.controle_financas.dto.LancamentoDTO;
+import com.meusprojetos.controle_financas.entities.Lancamento;
+import com.meusprojetos.controle_financas.repositories.LancamentoRepository;
+
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+
+@Service
+public class LancamentoService  {
+
+	@Autowired
+	private LancamentoRepository repository;
+
+	public Page<LancamentoDTO> findAll(String descricao, Pageable pageable) {
+		Page<Lancamento> result = repository.searchByDescricao(descricao, pageable);
+		return result.map(x -> new LancamentoDTO(x));
+	}
+
+	public LancamentoDTO findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public @Valid LancamentoDTO update(Long id, @Valid LancamentoDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void delete(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Transactional
+	public LancamentoDTO insert(LancamentoDTO dto) {
+		Lancamento Lancamento = new Lancamento();
+		copyDTOToEntity(dto, Lancamento);
+		return new LancamentoDTO(repository.save(Lancamento));
+	}
+
+	private void copyDTOToEntity(LancamentoDTO dto, Lancamento lancamento) {
+		
+		
+	}
+	
+
+	
+
+}

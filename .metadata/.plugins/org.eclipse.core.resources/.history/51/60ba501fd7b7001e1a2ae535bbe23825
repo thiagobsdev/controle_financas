@@ -1,0 +1,9 @@
+package com.meusprojetos.controle_financas.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.meusprojetos.controle_financas.entities.Lancamento;
+
+public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
+
+}

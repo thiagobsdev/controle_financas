@@ -1,0 +1,52 @@
+package com.meusprojetos.controle_financas.entities;
+
+
+
+import java.math.BigDecimal;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_lancamento")
+public class Lancamento {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String descricao;
+	private Integer ano;
+	private Integer mes;
+	private BigDecimal valor;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User client;
+	
+	public Lancamento() {
+	}
+
+	public Lancamento(Long id, String descricao, Integer ano, Integer mes, BigDecimal valor, User client) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.ano = ano;
+		this.mes = mes;
+		this.valor = valor;
+		this.client = client;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

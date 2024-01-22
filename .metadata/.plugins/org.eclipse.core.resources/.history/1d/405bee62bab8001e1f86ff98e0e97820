@@ -1,0 +1,39 @@
+package com.meusprojetos.controle_financas.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.meusprojetos.controle_financas.dto.LancamentoDTO;
+import com.meusprojetos.controle_financas.entities.Lancamento;
+import com.meusprojetos.controle_financas.entities.Role;
+
+import com.meusprojetos.controle_financas.repositories.LancamentoRepository;
+import com.meusprojetos.controle_financas.repositories.RoleRepository;
+import com.meusprojetos.controle_financas.services.exceptions.DataBaseExceptions;
+import com.meusprojetos.controle_financas.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+
+@Service
+public class LancamentoService  {
+
+	@Autowired
+	private LancamentoRepository repository;
+	
+
+	
+
+}

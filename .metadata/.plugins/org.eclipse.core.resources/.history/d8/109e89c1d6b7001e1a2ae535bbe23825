@@ -1,0 +1,5 @@
+package com.meusprojetos.controle_financas.repositories;
+
+public interface UserRepository {
+
+}
