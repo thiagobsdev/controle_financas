@@ -1,0 +1,28 @@
+# STS (Spring Tool Suite)
+sts/
+
+# Eclipse and STS metadata
+.metadata/
+.classpath
+.project
+.settings/
+
+# Maven
+target/
+*.iml
+
+# Gradle
+.gradle/
+build/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# IDE-specific files
+.vscode/
+.idea/

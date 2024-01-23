@@ -1,8 +1,12 @@
 package com.meusprojetos.controle_financas.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.meusprojetos.controle_financas.entities.Categoria;
 import com.meusprojetos.controle_financas.entities.Lancamento;
 import com.meusprojetos.controle_financas.entities.enums.StatusLancamento;
 import com.meusprojetos.controle_financas.entities.enums.TipoLancamento;
@@ -18,6 +22,8 @@ public class LancamentoDTO {
 	private UserMinDTO userMinDTO = new UserMinDTO();
 	private TipoLancamento tipoLancamento;
 	private StatusLancamento statusLancamento;
+	@JsonProperty(value = "categorias")
+	private List<CategoriaDTO> categoriaDTO = new ArrayList<>();
 	
 	
 	public LancamentoDTO() {
@@ -46,6 +52,13 @@ public class LancamentoDTO {
 		userMinDTO = new UserMinDTO(entity.getUser());
 		tipoLancamento = entity.getTipoLancamento();
 		statusLancamento = entity.getStatusLancamento();
+		
+		for(Categoria categoria: entity.getCategorias() ) {
+			CategoriaDTO entityCategoriaDTO = new CategoriaDTO(categoria);
+			categoriaDTO.add(entityCategoriaDTO);
+		}
+		
+		
 	}
 
 
@@ -58,6 +71,10 @@ public class LancamentoDTO {
 		userMinDTO = new UserMinDTO(projection.getUser());
 		tipoLancamento = projection.getTipoLancamento();
 		statusLancamento = projection.getStatusLancamento();
+		for(CategoriaDTO projectCategoriaDTO : projection.getCategoriaDTO() ) {
+			CategoriaDTO entityCategoriaDTO = new CategoriaDTO(projectCategoriaDTO);
+			categoriaDTO.add(entityCategoriaDTO);
+		}
 	}
 	
 	public LancamentoDTO(LancamentoMinDTO lancamentoMinDTO) {
@@ -68,6 +85,9 @@ public class LancamentoDTO {
 		valor = lancamentoMinDTO.getValor();
 		tipoLancamento = lancamentoMinDTO.getTipoLancamento();
 		statusLancamento = lancamentoMinDTO.getStatusLancamento();
+		for(CategoriaDTO catDTO: lancamentoMinDTO.getCategoriasDTO() ) {
+			categoriaDTO.add(catDTO);
+		}
 	}
 
 
@@ -156,12 +176,15 @@ public class LancamentoDTO {
 		this.statusLancamento = statusLancamento;
 	}
 	
-	
+
+	public List<CategoriaDTO> getCategoriaDTO() {
+		return categoriaDTO;
+	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ano, descricao, id, mes, statusLancamento, tipoLancamento, userMinDTO, valor);
+		return Objects.hash(ano, categoriaDTO, descricao, id, mes, statusLancamento, tipoLancamento, userMinDTO, valor);
 	}
 
 
@@ -174,10 +197,11 @@ public class LancamentoDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		LancamentoDTO other = (LancamentoDTO) obj;
-		return Objects.equals(ano, other.ano) && Objects.equals(descricao, other.descricao)
-				&& Objects.equals(id, other.id) && Objects.equals(mes, other.mes)
-				&& statusLancamento == other.statusLancamento && tipoLancamento == other.tipoLancamento
-				&& Objects.equals(userMinDTO, other.userMinDTO) && Objects.equals(valor, other.valor);
+		return Objects.equals(ano, other.ano) && Objects.equals(categoriaDTO, other.categoriaDTO)
+				&& Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id)
+				&& Objects.equals(mes, other.mes) && statusLancamento == other.statusLancamento
+				&& tipoLancamento == other.tipoLancamento && Objects.equals(userMinDTO, other.userMinDTO)
+				&& Objects.equals(valor, other.valor);
 	}
 
 
@@ -185,9 +209,14 @@ public class LancamentoDTO {
 	public String toString() {
 		return "LancamentoDTO [id=" + id + ", descricao=" + descricao + ", ano=" + ano + ", mes=" + mes + ", valor="
 				+ valor + ", userMinDTO=" + userMinDTO + ", tipoLancamento=" + tipoLancamento + ", statusLancamento="
-				+ statusLancamento + "]";
+				+ statusLancamento + ", categoriaDTO=" + categoriaDTO + "]";
 	}
 
+
+	
+
+
+	
 
 	
 

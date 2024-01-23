@@ -18,4 +18,7 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (4, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (4, 2);
 
+INSERT INTO tb_categoria (id, nome_categoria) VALUES (1, 'Salário');
+
 INSERT INTO tb_lancamento (descricao, ano, mes, valor ,user_id, status, tipo ) VALUES ('lorem ipsum',2024, 2, 90.9, 1,'PENDENTE', 'RECEITA' );
+INSERT INTO tb_categoria_lancamento (categoria_id, lancamento_id) VALUES (1, 1);

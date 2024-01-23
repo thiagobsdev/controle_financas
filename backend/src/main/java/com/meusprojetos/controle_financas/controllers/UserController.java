@@ -55,11 +55,11 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/newuser")
 	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto) {
-		dto = service.insert(dto);
+		UserDTO  newDto = service.insert(dto);
 
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
 
-		return ResponseEntity.created(uri).body(dto);
+		return ResponseEntity.created(uri).body(newDto);
 
 	}
 

@@ -11,6 +11,8 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.meusprojetos.controle_financas.dto.UserDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +36,9 @@ public class User implements UserDetails {
 	
 	@Column(unique = true)
 	private String email;
+	
 	private String password;
+	
 	
 	@OneToMany(mappedBy = "user")
 	private List<Lancamento> lancamentos = new ArrayList<>();
@@ -51,6 +55,12 @@ public class User implements UserDetails {
 		this.name = name;
 		this.email = email;
 		this.password = senha;
+	}
+	
+	public User(UserDTO me) {
+		id = me.getId();
+		name = me.getName();
+		email = me.getEmail();		
 	}
 	
 	public void setId(Long id) {

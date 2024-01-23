@@ -3,22 +3,24 @@ package com.meusprojetos.controle_financas.entities;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import com.meusprojetos.controle_financas.dto.UserDTO;
-import com.meusprojetos.controle_financas.dto.UserMinDTO;
 import com.meusprojetos.controle_financas.entities.enums.StatusLancamento;
 import com.meusprojetos.controle_financas.entities.enums.TipoLancamento;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -35,7 +37,7 @@ public class Lancamento {
 	private Integer mes;
 	private BigDecimal valor;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	
@@ -46,6 +48,10 @@ public class Lancamento {
 	@Column(name="status")
 	@Enumerated(value = EnumType.STRING )
 	private StatusLancamento statusLancamento;
+	
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@JoinTable(name = "tb_categoria_lancamento", joinColumns = @JoinColumn(name = "lancamento_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	private List<Categoria> categorias = new ArrayList<>();
 	
 	
 	public Lancamento() {
@@ -137,6 +143,11 @@ public class Lancamento {
 
 	public void setStatusLancamento(StatusLancamento statusLancamento) {
 		this.statusLancamento = statusLancamento;
+	}
+	
+	
+	public List<Categoria> getCategorias() {
+		return categorias;
 	}
 
 

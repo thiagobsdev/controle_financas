@@ -76,9 +76,9 @@ public class LancamentoController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<LancamentoDTO> update(@PathVariable Long id, @Valid @RequestBody LancamentoDTO dto) {
-		dto = service.update(id, dto);
-		return ResponseEntity.ok(dto);
+	public ResponseEntity<LancamentoDTO> update(@PathVariable Long id, @Valid @RequestBody LancamentoMinDTO dto) {
+		LancamentoDTO newDto = service.update(id, dto);
+		return ResponseEntity.ok(newDto);
 	}
 
 	@DeleteMapping("/{id}")

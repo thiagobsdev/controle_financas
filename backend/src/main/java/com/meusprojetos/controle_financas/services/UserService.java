@@ -29,7 +29,6 @@ import com.meusprojetos.controle_financas.services.exceptions.DataBaseExceptions
 import com.meusprojetos.controle_financas.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -82,11 +81,11 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Transactional
-	public @Valid UserInsertDTO insert(UserInsertDTO dto) {
+	public  UserDTO insert(UserInsertDTO dto) {
 		User user = new User();
 		copyDtoTOEntity(dto, user);
 
-		UserInsertDTO newUserDTO = new UserInsertDTO(repository.save(user));
+		UserDTO newUserDTO = new UserDTO(repository.save(user));
 
 		List<RoleDetailsProjection> result = roleRepository.searchRolesByListAuthority(dto.getRoles());
 		for (RoleDetailsProjection projection : result) {

@@ -1,6 +1,8 @@
 package com.meusprojetos.controle_financas.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.meusprojetos.controle_financas.entities.Lancamento;
@@ -17,6 +19,7 @@ public class LancamentoMinDTO {
 	private BigDecimal valor;
 	private TipoLancamento tipoLancamento;
 	private StatusLancamento statusLancamento;
+	private List<CategoriaDTO> categorias = new ArrayList<>();
 	
 	
 	public LancamentoMinDTO() {
@@ -35,6 +38,19 @@ public class LancamentoMinDTO {
 		this.statusLancamento = statusLancamento;
 	}
 	
+	public LancamentoMinDTO(Long id, String descricao, Integer ano, Integer mes, BigDecimal valor
+			,TipoLancamento tipoLancamento, StatusLancamento statusLancamento, List<CategoriaDTO> categorias) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.ano = ano;
+		this.mes = mes;
+		this.valor = valor;
+		this.tipoLancamento = tipoLancamento;
+		this.statusLancamento = statusLancamento;
+		this.categorias = categorias;
+	}
+	
 	public LancamentoMinDTO(Lancamento entity) {
 		id = entity.getId();
 		descricao = entity.getDescricao();
@@ -43,6 +59,8 @@ public class LancamentoMinDTO {
 		valor = entity.getValor();
 		tipoLancamento = entity.getTipoLancamento();
 		statusLancamento = entity.getStatusLancamento();
+		entity.getCategorias().forEach(x -> categorias.add(new CategoriaDTO(x)));
+		
 	}
 
 
@@ -54,6 +72,7 @@ public class LancamentoMinDTO {
 		valor = projection.getValor();
 		tipoLancamento = projection.getTipoLancamento();
 		statusLancamento = projection.getStatusLancamento();
+		projection.getCategoriaDTO().forEach(x -> categorias.add(new CategoriaDTO(x)));
 	}
 
 
@@ -125,11 +144,17 @@ public class LancamentoMinDTO {
 	public void setStatusLancamento(StatusLancamento statusLancamento) {
 		this.statusLancamento = statusLancamento;
 	}
+	
+	
+
+	public List<CategoriaDTO> getCategoriasDTO() {
+		return categorias;
+	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ano, descricao, id, mes, statusLancamento, tipoLancamento, valor);
+		return Objects.hash(ano, categorias, descricao, id, mes, statusLancamento, tipoLancamento, valor);
 	}
 
 
@@ -142,18 +167,22 @@ public class LancamentoMinDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		LancamentoMinDTO other = (LancamentoMinDTO) obj;
-		return Objects.equals(ano, other.ano) && Objects.equals(descricao, other.descricao)
-				&& Objects.equals(id, other.id) && Objects.equals(mes, other.mes)
-				&& statusLancamento == other.statusLancamento && tipoLancamento == other.tipoLancamento
-				&& Objects.equals(valor, other.valor);
+		return Objects.equals(ano, other.ano) && Objects.equals(categorias, other.categorias)
+				&& Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id)
+				&& Objects.equals(mes, other.mes) && statusLancamento == other.statusLancamento
+				&& tipoLancamento == other.tipoLancamento && Objects.equals(valor, other.valor);
 	}
 
 
 	@Override
 	public String toString() {
-		return "LancamentoMInDTO [id=" + id + ", descricao=" + descricao + ", ano=" + ano + ", mes=" + mes + ", valor="
-				+ valor + ", tipoLancamento=" + tipoLancamento + ", statusLancamento=" + statusLancamento + "]";
+		return "LancamentoMinDTO [id=" + id + ", descricao=" + descricao + ", ano=" + ano + ", mes=" + mes + ", valor="
+				+ valor + ", tipoLancamento=" + tipoLancamento + ", statusLancamento=" + statusLancamento
+				+ ", categorias=" + categorias + "]";
 	}
+
+
+	
 
 
 
