@@ -5,6 +5,8 @@ package com.meusprojetos.controle_financas.entities;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import com.meusprojetos.controle_financas.dto.UserDTO;
+import com.meusprojetos.controle_financas.dto.UserMinDTO;
 import com.meusprojetos.controle_financas.entities.enums.StatusLancamento;
 import com.meusprojetos.controle_financas.entities.enums.TipoLancamento;
 
@@ -116,8 +118,8 @@ public class Lancamento {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-
+	
+	
 	public TipoLancamento getTipoLancamento() {
 		return tipoLancamento;
 	}
@@ -167,6 +169,9 @@ public class Lancamento {
 				+ ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()=" + super.toString()
 				+ "]";
 	}
+
+
+	
 	
 	
 

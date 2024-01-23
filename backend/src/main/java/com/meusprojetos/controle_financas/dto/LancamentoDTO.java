@@ -6,6 +6,7 @@ import java.util.Objects;
 import com.meusprojetos.controle_financas.entities.Lancamento;
 import com.meusprojetos.controle_financas.entities.enums.StatusLancamento;
 import com.meusprojetos.controle_financas.entities.enums.TipoLancamento;
+import com.meusprojetos.controle_financas.projections.LancamentoDetailsProjection;
 
 public class LancamentoDTO {
 
@@ -14,7 +15,7 @@ public class LancamentoDTO {
 	private Integer ano;
 	private Integer mes;
 	private BigDecimal valor;
-	private UserDTO userDTO;
+	private UserMinDTO userMinDTO = new UserMinDTO();
 	private TipoLancamento tipoLancamento;
 	private StatusLancamento statusLancamento;
 	
@@ -23,7 +24,7 @@ public class LancamentoDTO {
 	}
 
 
-	public LancamentoDTO(Long id, String descricao, Integer ano, Integer mes, BigDecimal valor, UserDTO userDTO,
+	public LancamentoDTO(Long id, String descricao, Integer ano, Integer mes, BigDecimal valor, UserMinDTO userMinDTO,
 			TipoLancamento tipoLancamento, StatusLancamento statusLancamento) {
 		super();
 		this.id = id;
@@ -31,7 +32,7 @@ public class LancamentoDTO {
 		this.ano = ano;
 		this.mes = mes;
 		this.valor = valor;
-		this.userDTO = userDTO;
+		this.userMinDTO = userMinDTO;
 		this.tipoLancamento = tipoLancamento;
 		this.statusLancamento = statusLancamento;
 	}
@@ -42,9 +43,31 @@ public class LancamentoDTO {
 		ano = entity.getAno();
 		mes = entity.getMes();
 		valor = entity.getValor();
-		userDTO = new UserDTO(entity.getUser());
+		userMinDTO = new UserMinDTO(entity.getUser());
 		tipoLancamento = entity.getTipoLancamento();
 		statusLancamento = entity.getStatusLancamento();
+	}
+
+
+	public LancamentoDTO(LancamentoDetailsProjection projection) {
+		id = projection.getId();
+		descricao = projection.getDescricao();
+		ano = projection.getAno();
+		mes = projection.getMes();
+		valor = projection.getValor();
+		userMinDTO = new UserMinDTO(projection.getUser());
+		tipoLancamento = projection.getTipoLancamento();
+		statusLancamento = projection.getStatusLancamento();
+	}
+	
+	public LancamentoDTO(LancamentoMinDTO lancamentoMinDTO) {
+		id = lancamentoMinDTO.getId();
+		descricao = lancamentoMinDTO.getDescricao();
+		ano = lancamentoMinDTO.getAno();
+		mes = lancamentoMinDTO.getMes();
+		valor = lancamentoMinDTO.getValor();
+		tipoLancamento = lancamentoMinDTO.getTipoLancamento();
+		statusLancamento = lancamentoMinDTO.getStatusLancamento();
 	}
 
 
@@ -98,13 +121,19 @@ public class LancamentoDTO {
 	}
 
 
-	public UserDTO getUser() {
-		return userDTO;
+	public UserMinDTO getUser() {
+		return userMinDTO;
 	}
 
 
-	public void setUser(UserDTO userDTO) {
-		this.userDTO = userDTO;
+	public void setUser(UserMinDTO userMinDTO) {
+		this.userMinDTO = userMinDTO;
+	}
+	
+	public void  setUser(UserDTO newUserDTO) {
+		userMinDTO.setId(newUserDTO.getId());
+		userMinDTO.setName(newUserDTO.getName());
+		userMinDTO.setEmail(newUserDTO.getEmail());
 	}
 
 
@@ -126,11 +155,13 @@ public class LancamentoDTO {
 	public void setStatusLancamento(StatusLancamento statusLancamento) {
 		this.statusLancamento = statusLancamento;
 	}
+	
+	
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ano, descricao, id, mes, statusLancamento, tipoLancamento, userDTO, valor);
+		return Objects.hash(ano, descricao, id, mes, statusLancamento, tipoLancamento, userMinDTO, valor);
 	}
 
 
@@ -146,16 +177,24 @@ public class LancamentoDTO {
 		return Objects.equals(ano, other.ano) && Objects.equals(descricao, other.descricao)
 				&& Objects.equals(id, other.id) && Objects.equals(mes, other.mes)
 				&& statusLancamento == other.statusLancamento && tipoLancamento == other.tipoLancamento
-				&& Objects.equals(userDTO, other.userDTO) && Objects.equals(valor, other.valor);
+				&& Objects.equals(userMinDTO, other.userMinDTO) && Objects.equals(valor, other.valor);
 	}
 
 
 	@Override
 	public String toString() {
 		return "LancamentoDTO [id=" + id + ", descricao=" + descricao + ", ano=" + ano + ", mes=" + mes + ", valor="
-				+ valor + ", user=" + userDTO + ", tipoLancamento=" + tipoLancamento + ", statusLancamento="
+				+ valor + ", userMinDTO=" + userMinDTO + ", tipoLancamento=" + tipoLancamento + ", statusLancamento="
 				+ statusLancamento + "]";
 	}
+
+
+	
+
+
+
+
+	
 	
 	
 	

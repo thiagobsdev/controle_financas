@@ -37,7 +37,13 @@ public class UserDTO {
 		this.email = email;
 		this.roles = roles;
 	}
-
+	
+	public UserDTO(UserMinDTO userMinDTO) {
+		super();
+		this.id = userMinDTO.getId();
+		this.name = userMinDTO.getName();
+		this.email = userMinDTO.getEmail();
+	}
 
 
 

@@ -1,0 +1,105 @@
+package com.meusprojetos.controle_financas.dto;
+
+import java.util.Objects;
+
+import com.meusprojetos.controle_financas.entities.User;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+public class UserMinDTO {
+	
+	private Long id;
+	
+	@NotBlank(message = "O nome não pode estar vazio")
+	@Size(min = 3, max = 80, message = "O Nome deve ter entre 03 e 80 caracteres")
+	private String name;
+	
+	@NotNull(message = "Campo requerido")
+	@Email
+	private String email;
+	
+	
+	public UserMinDTO() {
+	}
+	
+	public UserMinDTO(Long id, String name, String email, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		
+	}
+	
+	public UserMinDTO(UserMinDTO userMinDTO) {
+		
+	}
+
+	public UserMinDTO(User entity) {
+		id = entity.getId();
+		name = entity.getName();
+		email = entity.getEmail();	
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, id, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserMinDTO other = (UserMinDTO) obj;
+		return Objects.equals(email, other.email) && Objects.equals(id, other.id) && Objects.equals(name, other.name);
+	}
+
+	@Override
+	public String toString() {
+		return "UserMinDTO [id=" + id + ", name=" + name + ", email=" + email + "]";
+	}
+	
+	
+	
+	
+
+	
+	
+
+	
+
+	
+	
+
+}

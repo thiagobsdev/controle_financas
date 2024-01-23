@@ -52,6 +52,11 @@ public class User implements UserDetails {
 		this.email = email;
 		this.password = senha;
 	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 
 	public Long getId() {
 		return id;

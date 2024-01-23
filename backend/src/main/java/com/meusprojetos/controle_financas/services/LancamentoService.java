@@ -1,5 +1,8 @@
 package com.meusprojetos.controle_financas.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,8 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.meusprojetos.controle_financas.dto.LancamentoDTO;
+import com.meusprojetos.controle_financas.dto.LancamentoMinDTO;
 import com.meusprojetos.controle_financas.dto.UserDTO;
 import com.meusprojetos.controle_financas.entities.Lancamento;
+import com.meusprojetos.controle_financas.entities.User;
+import com.meusprojetos.controle_financas.projections.LancamentoDetailsProjection;
 import com.meusprojetos.controle_financas.repositories.LancamentoRepository;
 import com.meusprojetos.controle_financas.services.exceptions.ResourceNotFoundException;
 
@@ -32,20 +38,22 @@ public class LancamentoService  {
 	
 	@Transactional(readOnly = true)
 	public Page<LancamentoDTO> findAllByUser(String descricao, Pageable pageable) {
-		
 		UserDTO userDTO = userService.getMe();
-		
 		Page<Lancamento> result = repository.searchByUser(descricao, pageable, userDTO.getId());
 		return result.map(x -> new LancamentoDTO(x));
-		
-		
 	}
+	
+	public List<LancamentoDTO> findAllByUserAndId(Long id) {
+		UserDTO userDTO = userService.getMe();
+		List<LancamentoDetailsProjection> result = repository.findAllByUserAndId( id, userDTO.getId());
+		return result.stream().map(x -> new LancamentoDTO(x)).collect(Collectors.toList());
+	}
+
 
 	@Transactional(readOnly = true)
 	public LancamentoDTO findById(Long id) {
 		Lancamento lancamento = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
-
 		LancamentoDTO dto = new LancamentoDTO(lancamento);
 		return dto;
 
@@ -62,17 +70,33 @@ public class LancamentoService  {
 	}
 
 	@Transactional
-	public LancamentoDTO insert(LancamentoDTO dto) {
-		Lancamento Lancamento = new Lancamento();
-		copyDTOToEntity(dto, Lancamento);
-		return new LancamentoDTO(repository.save(Lancamento));
+	public LancamentoDTO insert(LancamentoMinDTO dto) {
+		
+		LancamentoDTO newLancamentoDTO = new LancamentoDTO(dto);
+		UserDTO newUserDTO = userService.getMe();
+		newLancamentoDTO.setUser(newUserDTO);
+		
+		User user = new User();
+		Lancamento lancamento = new Lancamento();
+		lancamento.setUser(user);
+
+		copyDTOToEntity(newLancamentoDTO, lancamento, newUserDTO);
+		return new LancamentoDTO(repository.save(lancamento));
 	}
 
-	private void copyDTOToEntity(LancamentoDTO dto, Lancamento lancamento) {
-		
-		
+	private void copyDTOToEntity(LancamentoDTO dto, Lancamento lancamento, UserDTO userDTO) {
+		lancamento.setAno(dto.getAno());
+		lancamento.setDescricao(dto.getDescricao());
+		lancamento.setMes(dto.getMes());
+		lancamento.setValor(dto.getValor());
+		lancamento.setStatusLancamento(dto.getStatusLancamento());
+		lancamento.setTipoLancamento(dto.getTipoLancamento());
+		lancamento.getUser().setId(userDTO.getId());
+		lancamento.getUser().setEmail(userDTO.getEmail());
+		lancamento.getUser().setName(userDTO.getName());
 	}
 
+	
 	
 	
 

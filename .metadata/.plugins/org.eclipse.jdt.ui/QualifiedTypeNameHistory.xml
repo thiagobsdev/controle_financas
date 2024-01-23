@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.dto.UserDto"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="org.springframework.security.crypto.password.PasswordEncoder"/>
-    <fullyQualifiedTypeName name="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.CascadeType"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.entities.Role"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.repositories.RoleRepository"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.projections.RoleDetailsProjection"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Modifying"/>
     <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.dto.RoleDTO"/>
+    <fullyQualifiedTypeName name="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <fullyQualifiedTypeName name="org.springframework.data.domain.Pageable"/>
+    <fullyQualifiedTypeName name="org.springframework.data.domain.Page"/>
+    <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Propagation"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.services.exceptions.DataBaseExceptions"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.dto.UserInsertDTO"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.dto.LancamentoDTO"/>
+    <fullyQualifiedTypeName name="jakarta.transaction.Transactional"/>
+    <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.FetchType"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.services.UserService"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.dto.UserDTO"/>
+    <fullyQualifiedTypeName name="com.meusprojetos.controle_financas.entities.User"/>
 </qualifiedTypeNameHistroy>
